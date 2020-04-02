@@ -9,17 +9,38 @@ export default class Home extends cc.Component {
     @property(cc.Prefab) blockPrefab: cc.Prefab = null
     @property(cc.Prefab) snakeBodyPrefab: cc.Prefab = null
     @property(cc.Prefab) wallPrefab: cc.Prefab = null
+    @property(cc.Node) playerLimit: cc.Node = null
 
-    @property speed: number = 1
-    @property top: number = 999
+    @property speed = 1
+    @property top = 999
 
     colors: any[]
     spwanBlock = 0
     blockSize = 150
 
+    player: cc.Node
+    playerLimitLeft: cc.Node
+    playerLimitRight: cc.Node
+
     // init logic
     start () {
+        // 开启碰撞检测系统，未开启时无法检测
+        let manager = cc.director.getCollisionManager();
+        manager.enabled = true;
+        manager.enabledDebugDraw = true;
+        manager.enabledDrawBoundingBox = true;
+
         this.colors = Utils.gradient('#ff0000', '#ffff00', 10);
+        this.spwanNewSnake();
+        this.playerLimit.getComponent('PlayLimit').init(this);
+    }
+
+    spwanNewSnake() {
+        let newSnake = Pool.spawnNewNode(this.snakeBodyPrefab) as cc.Node;
+        this.player = newSnake;
+        this.node.addChild(newSnake);
+        newSnake.setPosition(0, 0);
+        newSnake.getComponent('SnakeBody').init(this);
     }
 
     spwanNewBlock() {

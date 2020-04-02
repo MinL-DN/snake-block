@@ -31,12 +31,16 @@ export default class Wall extends cc.Component {
 
         let width = 10;
         let height = game.blockSize;
-        if (Utils.random(10) > 5) height = game.blockSize * 3
-
+        if (Utils.random(10) > 5) {
+            height = game.blockSize * 3;
+        }
+        // 清除预制资源画面
+        if (this.ctx) this.ctx.clear();
         this.ctx = this.getComponent(cc.Graphics);
         this.ctx.roundRect(width / -2, height / -2, width, height, width);
         this.ctx.fillColor = cc.Color.WHITE;
         this.ctx.fill();
+        this.node.getComponent(cc.BoxCollider).size.height = height;
     }
 
     start () {

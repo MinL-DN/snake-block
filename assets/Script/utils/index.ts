@@ -296,6 +296,15 @@ namespace Utils {
     export function random(num: number) {
         return Math.floor((Math.random() * num));
     }
+
+    export function getPosMinMax(node: cc.Node) {
+        return {
+            xMin: node.x - node.width / 2,
+            xMax: node.x + node.width / 2,
+            yMin: node.y - node.height / 2,
+            yMax: node.y + node.height / 2,
+        }
+    }
 }
 
 export default Utils;
