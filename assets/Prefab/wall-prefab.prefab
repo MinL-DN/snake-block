@@ -42,7 +42,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
+      "width": 10,
       "height": 0
     },
     "_anchorPoint": {
@@ -139,7 +139,7 @@
     "_size": {
       "__type__": "cc.Size",
       "width": 10,
-      "height": 150
+      "height": 10
     },
     "_id": ""
   },

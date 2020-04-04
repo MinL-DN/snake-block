@@ -28,7 +28,7 @@
   ],
   "group-list": [
     "default",
-    "Player",
+    "PlayerLimit",
     "Block",
     "Wall"
   ],

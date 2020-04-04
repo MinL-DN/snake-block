@@ -19,8 +19,6 @@ export default class Block extends cc.Component {
 
     ctx: cc.Graphics
 
-    // LIFE-CYCLE CALLBACKS:
-
     onLoad () {
         this.enabled = false;
     }
@@ -30,6 +28,7 @@ export default class Block extends cc.Component {
         this.game = game;
         let color = game.colors[Math.floor(Math.random() * game.colors.length)];
 
+        if (this.ctx) this.ctx.clear();
         this.ctx = this.getComponent(cc.Graphics);
         this.ctx.roundRect(-73, -73, 146, 146, 15);
         this.ctx.fillColor.fromHEX(color);
@@ -43,6 +42,9 @@ export default class Block extends cc.Component {
     }
 
     update (dt) {
+
+        if (this.game.hitBlock) return;
+
         this.node.y = this.node.y - this.game.speed;
 
         if (this.node.y <= this.game.top * -1) {

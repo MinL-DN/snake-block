@@ -41,6 +41,7 @@ export default class Wall extends cc.Component {
         this.ctx.fillColor = cc.Color.WHITE;
         this.ctx.fill();
         this.node.getComponent(cc.BoxCollider).size.height = height;
+        this.node.height = height;
     }
 
     start () {
@@ -48,6 +49,9 @@ export default class Wall extends cc.Component {
     }
 
     update (dt) {
+
+        if (this.game.hitBlock) return;
+
         this.node.y = this.node.y - this.game.speed;
 
         if (this.node.y <= this.game.top * -1) {

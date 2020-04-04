@@ -2,6 +2,7 @@ const {ccclass, property} = cc._decorator;
 
 import Utils from './utils/index';
 import Pool from './utils/pool';
+import Player from './Player';
 
 @ccclass
 export default class Home extends cc.Component {
@@ -17,10 +18,12 @@ export default class Home extends cc.Component {
     colors: any[]
     spwanBlock = 0
     blockSize = 150
+    hitBlock = false // 撞击石块
 
-    player: cc.Node
-    playerLimitLeft: cc.Node
-    playerLimitRight: cc.Node
+    distance = 0;
+
+    player: Player
+    playerLimitNodes: cc.Node[] = []
 
     // init logic
     start () {
@@ -31,16 +34,9 @@ export default class Home extends cc.Component {
         manager.enabledDrawBoundingBox = true;
 
         this.colors = Utils.gradient('#ff0000', '#ffff00', 10);
-        this.spwanNewSnake();
-        this.playerLimit.getComponent('PlayLimit').init(this);
-    }
-
-    spwanNewSnake() {
-        let newSnake = Pool.spawnNewNode(this.snakeBodyPrefab) as cc.Node;
-        this.player = newSnake;
-        this.node.addChild(newSnake);
-        newSnake.setPosition(0, 0);
-        newSnake.getComponent('SnakeBody').init(this);
+        this.playerLimit.getComponent('PlayerLimit').init(this);
+        this.player = new Player();
+        this.player.init(this);
     }
 
     spwanNewBlock() {
@@ -59,7 +55,7 @@ export default class Home extends cc.Component {
     spwanNewWall() {
         let randomNum = Utils.random(10);
 
-        if (randomNum > 8) {
+        if (randomNum > 5) {
             let x = this.blockSize * ((Utils.random(4) + 1) - 2.5);
             let newWall = Pool.spawnNewNode(this.wallPrefab) as cc.Node;
             this.node.addChild(newWall);
@@ -69,6 +65,12 @@ export default class Home extends cc.Component {
     }
 
     update() {
+
+        this.distance = this.distance + this.speed;
+        this.player.update();
+
+        // if (this.hitBlock) return;
+
         if (this.spwanBlock >= this.blockSize) {
             this.spwanBlock = 0;
             this.spwanNewBlock();

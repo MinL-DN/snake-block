@@ -305,6 +305,22 @@ namespace Utils {
             yMax: node.y + node.height / 2,
         }
     }
+
+    export function sleep(num: number) {
+        return new Promise(res => {
+            setTimeout(() => {
+                res();
+            }, num);
+        })
+    }
+
+    // 计算两点之间距离
+    export function computerOffset(posA, posB) {
+        let x = posA[0] - posB[0];
+        let y = posA[1] - posB[1];
+        let z = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+        return { sin: x / z, cos: y / z, z };
+    }
 }
 
 export default Utils;
