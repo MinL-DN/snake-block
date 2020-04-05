@@ -107,6 +107,23 @@ export default class Player extends cc.Component {
      */
     onCollisionEnter (other, self) {
         this.playerLimitNodes.push(other.node);
+
+        let minMax = Utils.getPosMinMax(other.node);
+        let playerMinMax = Utils.getPosMinMax(this.header);
+
+        if (other.node.name == 'block-prefab') {
+            if (
+                playerMinMax.xMin > minMax.xMin &&
+                playerMinMax.xMax < minMax.xMax
+            ) {
+                console.log('撞墙啦！' + other.node.getComponent('Block').number.string);
+                this.game.hitBlock = other.node;
+                setTimeout(() => {
+                    this.game.hitBlock = false;
+                }, other.node.getComponent('Block').number.string * 10)
+            }
+        }
+
     }
 
     /**
