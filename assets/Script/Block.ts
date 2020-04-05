@@ -26,15 +26,16 @@ export default class Block extends cc.Component {
     init(game: Game) {
         this.enabled = true;
         this.game = game;
-        let color = game.colors[Math.floor(Math.random() * game.colors.length)];
+        let random = Utils.random(this.game.maxBlockScore);
+        this.number.string = (random + 1).toString();
+
+        let color = game.colors[random];
 
         if (this.ctx) this.ctx.clear();
         this.ctx = this.getComponent(cc.Graphics);
         this.ctx.roundRect(-73, -73, 146, 146, 15);
         this.ctx.fillColor.fromHEX(color);
         this.ctx.fill();
-
-        this.number.string = (Utils.random(30) + 1).toString();
     }
 
     start () {

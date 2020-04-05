@@ -23,6 +23,8 @@ export default class Player extends cc.Component {
     header: cc.Node
     tracking = [[0, 0]]
 
+    playerLimitNodes: cc.Node[] = []
+
     // onLoad () {}
 
     init(game: Game) {
@@ -59,7 +61,7 @@ export default class Player extends cc.Component {
         }
 
         // 碰撞物体逻辑
-        this.game.playerLimitNodes.forEach(v => {
+        this.playerLimitNodes.forEach(v => {
             let limitPos = Utils.getPosMinMax(v);
 
             if (this.moveDistance > 0) { // 向左移动的
@@ -94,11 +96,33 @@ export default class Player extends cc.Component {
         });
     }
 
-    onTouchEnd(event) {
+    onTouchEnd(event?) {
         this.moveDistance = 0;
     }
 
+    /**
+     * 当碰撞产生的时候调用
+     * @param  {Collider} other 产生碰撞的另一个碰撞组件
+     * @param  {Collider} self  产生碰撞的自身的碰撞组件
+     */
+    onCollisionEnter (other, self) {
+        this.playerLimitNodes.push(other.node);
+    }
+
+    /**
+     * 当碰撞结束后调用
+     * @param  {Collider} other 产生碰撞的另一个碰撞组件
+     * @param  {Collider} self  产生碰撞的自身的碰撞组件
+     */
+    onCollisionExit (other, self) {
+        // console.log('on collision exit');
+        this.playerLimitNodes = this.playerLimitNodes.filter(v => v.uuid != other.node.uuid);
+    }
+
     update() {
+
+        if (!this.header) return;
+
         let x = this.header.x - this.moveDistance;
         let y = this.game.distance;
 
@@ -116,5 +140,7 @@ export default class Player extends cc.Component {
 
         this.header.x = this.tracking[0][0];
         this.header['relativeY'] = this.tracking[0][1];
+
+        this.onTouchEnd();
     }
 }

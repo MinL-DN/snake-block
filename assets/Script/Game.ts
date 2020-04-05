@@ -10,33 +10,29 @@ export default class Home extends cc.Component {
     @property(cc.Prefab) blockPrefab: cc.Prefab = null
     @property(cc.Prefab) snakeBodyPrefab: cc.Prefab = null
     @property(cc.Prefab) wallPrefab: cc.Prefab = null
-    @property(cc.Node) playerLimit: cc.Node = null
+    @property(cc.Node) player: cc.Node = null
 
     @property speed = 1
     @property top = 999
 
-    colors: any[]
-    spwanBlock = 0
-    blockSize = 150
-    hitBlock = false // 撞击石块
-
-    distance = 0;
-
-    player: Player
-    playerLimitNodes: cc.Node[] = []
+    colors: any[] // 颜色集
+    spwanBlock = 0 // 循环标识位
+    blockSize = 150 // 砖块大小
+    maxBlockScore = 50 // 砖块最大分数
+    hitBlock = false // 撞击石块标识位
+    distance = 0; // 运行长度
 
     // init logic
     start () {
         // 开启碰撞检测系统，未开启时无法检测
         let manager = cc.director.getCollisionManager();
         manager.enabled = true;
-        manager.enabledDebugDraw = true;
-        manager.enabledDrawBoundingBox = true;
+        // manager.enabledDebugDraw = true;
+        // manager.enabledDrawBoundingBox = true;
 
-        this.colors = Utils.gradient('#ff0000', '#ffff00', 10);
-        this.playerLimit.getComponent('PlayerLimit').init(this);
-        this.player = new Player();
-        this.player.init(this);
+        this.colors = Utils.gradient('#ffff00', '#ff0000', this.maxBlockScore);
+        // this.player = new Player();
+        this.player.getComponent('Player').init(this);
     }
 
     spwanNewBlock() {
@@ -66,10 +62,9 @@ export default class Home extends cc.Component {
 
     update() {
 
-        this.distance = this.distance + this.speed;
-        this.player.update();
+        if (this.hitBlock) return;
 
-        // if (this.hitBlock) return;
+        this.distance = this.distance + this.speed;
 
         if (this.spwanBlock >= this.blockSize) {
             this.spwanBlock = 0;

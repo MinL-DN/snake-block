@@ -15,9 +15,22 @@ export default class SnakeBody extends cc.Component {
 
     player: Player
     hitNode: cc.Node
+    ctx: cc.Graphics
 
     init(player: Player) {
         this.player = player;
+        this.render();
+    }
+
+    render() {
+        let width = this.node.width;
+        let height = this.node.height;
+        // 清除预制资源画面
+        if (this.ctx) this.ctx.clear();
+        this.ctx = this.getComponent(cc.Graphics);
+        this.ctx.roundRect(width / -2, height / -2, width, height, width / 2);
+        this.ctx.fillColor = cc.Color.WHITE;
+        this.ctx.fill();
     }
 
     onLoad() {

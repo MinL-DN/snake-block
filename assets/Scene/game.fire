@@ -364,7 +364,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "player-limit",
+    "_name": "player",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -458,16 +458,6 @@
     "_id": "ba2rW2CjlG46aGIGSaErL4"
   },
   {
-    "__type__": "4e1ebY96wJGxZqdYhLvPBGo",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 8
-    },
-    "_enabled": true,
-    "_id": "79XhkHHd9F3btrSxn3E1eW"
-  },
-  {
     "__type__": "cc.BoxCollider",
     "_name": "",
     "_objFlags": 0,
@@ -487,6 +477,16 @@
       "height": 30
     },
     "_id": "94WpWgFpJJtLuNdntqPQY5"
+  },
+  {
+    "__type__": "7fb1fK/oFxMaprRajAGVhj/",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 8
+    },
+    "_enabled": true,
+    "_id": "4aG6ASidRJ+6kSNoApP5gv"
   },
   {
     "__type__": "cc.Canvas",
@@ -522,7 +522,7 @@
     "wallPrefab": {
       "__uuid__": "c90d625c-972e-472f-9dba-991e7370cfb2"
     },
-    "playerLimit": {
+    "player": {
       "__id__": 8
     },
     "speed": 5,
