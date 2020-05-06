@@ -27,8 +27,8 @@ export default class Home extends cc.Component {
         // 开启碰撞检测系统，未开启时无法检测
         let manager = cc.director.getCollisionManager();
         manager.enabled = true;
-        // manager.enabledDebugDraw = true;
-        // manager.enabledDrawBoundingBox = true;
+        manager.enabledDebugDraw = true;
+        manager.enabledDrawBoundingBox = true;
 
         this.colors = Utils.gradient('#ffff00', '#ff0000', this.maxBlockScore);
         // this.player = new Player();
